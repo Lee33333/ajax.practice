@@ -18,7 +18,6 @@ function showWeather(evt) {
     var url = "/weather?zipcode=" + $("#zipcode-field").val();
     // TODO: request weather with that URL and show the forecast in #weather-info
     $.get(url, function (result){
-        console.log(result);
         $("#weather-info").text(result["forecast"]);
         }
 
@@ -41,6 +40,16 @@ function orderMelons(evt) {
         $('#order-form').serialize(),
         function (result) {
             // TODO: show the result message after your form
+            $("#order-status").removeClass("order-error");
+
+            if (result['code'] === "ERROR"){
+                $("#order-status").addClass("order-error");
+                $("#order-status").text(result['msg']);
+
+            }
+            else {
+            $("#order-status").text(result['msg']);
+        }
             // TODO: if the result code is ERROR, make it show up in red (see our CSS!)
         }
     );
